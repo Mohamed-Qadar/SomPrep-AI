@@ -1,0 +1,218 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  body {
+    background-color: #0c031a; /* brand.bg */
+    color: #f8fafc;            /* Light slate text */
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+    color: #f8fafc;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+}
+
+/* Premium smooth global scrollbar custom overrides */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0c031a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1a1130;
+  border: 2px solid #0c031a;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Modern premium utility components */
+@layer components {
+  .glass-panel {
+    background: rgba(26, 17, 48, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(99, 102, 241, 0.25); /* brand.border */
+  }
+
+  .interactive-card {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .interactive-card:hover {
+    transform: translateY(-2px);
+    border-color: #6366f1; /* Brand Indigo accent */
+    box-shadow: 0 10px 20px -10px rgba(99, 102, 241, 0.2);
+  }
+}
+
+/* ── Micro-animations and utility keyframes ── */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* Horizontal shake — used on the error alert banner */
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0);   }
+  15%       { transform: translateX(-5px); }
+  30%       { transform: translateX(5px);  }
+  45%       { transform: translateX(-4px); }
+  60%       { transform: translateX(4px);  }
+  75%       { transform: translateX(-2px); }
+  90%       { transform: translateX(2px);  }
+}
+
+/* Button shimmer sweep — pure CSS, no JS */
+@keyframes shimmer {
+  0%   { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(250%)  skewX(-20deg); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Error banner: fade in AND shake simultaneously */
+.animate-error-shake {
+  animation:
+    fadeIn     0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+    errorShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.05s both;
+}
+
+/* Submit button shimmer overlay — add ::before via a utility class */
+.btn-shimmer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.12) 50%,
+    transparent 70%
+  );
+  transform: translateX(-150%) skewX(-20deg);
+  animation: shimmer 2.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ── SomPrep Gamification Animations ── */
+
+/* Indigo pulse ripple — active roadmap node beacon */
+@keyframes pulseRing {
+  0%   { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.6); }
+  60%  { transform: scale(1);   box-shadow: 0 0 0 14px rgba(99, 102, 241, 0);  }
+  100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);   }
+}
+
+.animate-pulse-ring {
+  animation: pulseRing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Golden star glow — completed roadmap node */
+@keyframes starGlow {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.7));  }
+  50%       { filter: drop-shadow(0 0 10px rgba(251, 191, 36, 1.0)); }
+}
+
+.animate-star-glow {
+  animation: starGlow 2.4s ease-in-out infinite;
+}
+
+/* Circular ring fill — Results page performance arc */
+@keyframes ringFill {
+  from { stroke-dashoffset: 283; }
+  to   { stroke-dashoffset: var(--ring-offset, 0); }
+}
+
+.animate-ring-fill {
+  animation: ringFill 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: 0.3s;
+  stroke-dashoffset: 283;
+}
+
+/* XP bar fill */
+@keyframes xpFill {
+  from { width: 0%; }
+  to   { width: var(--xp-width, 0%); }
+}
+
+.animate-xp-fill {
+  animation: xpFill 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: 0.5s;
+  width: 0%;
+}
+
+/* Accordion expand */
+@keyframes accordionOpen {
+  from { max-height: 0; opacity: 0; }
+  to   { max-height: 800px; opacity: 1; }
+}
+
+.animate-accordion {
+  animation: accordionOpen 0.35s ease forwards;
+  overflow: hidden;
+}
+
+/* Coach avatar bob */
+@keyframes coachBob {
+  0%, 100% { transform: translateY(0);   }
+  50%       { transform: translateY(-4px); }
+}
+
+.animate-coach-bob {
+  animation: coachBob 3s ease-in-out infinite;
+}
+
+/* Locked node shimmer */
+@keyframes lockedShimmer {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 0.8; }
+}
+
+.animate-locked {
+  animation: lockedShimmer 2.5s ease-in-out infinite;
+}
+
+/* Video modal backdrop */
+.video-modal-backdrop {
+  background: rgba(2, 6, 23, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Reflex badge gradient */
+.reflex-badge {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+}
+
+/* XP number pop */
+@keyframes xpPop {
+  0%   { transform: scale(0.5) translateY(10px); opacity: 0; }
+  70%  { transform: scale(1.2) translateY(-4px); opacity: 1; }
+  100% { transform: scale(1)   translateY(0);    opacity: 1; }
+}
+
+.animate-xp-pop {
+  animation: xpPop 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}

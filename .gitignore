@@ -1,0 +1,37 @@
+# ── Environment & secrets ────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ── Uploaded user content (receipts etc.) — never commit ─────────────────
+backend/uploads/
+uploads/
+
+# ── Python ───────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+*.sqlite3
+*.db
+
+# ── Node / frontend ──────────────────────────────────────────────────────
+node_modules/
+frontend/dist/
+dist/
+.vite/
+vite.config.js.timestamp-*.mjs
+
+# ── Test / tooling caches ────────────────────────────────────────────────
+.pytest_cache/
+
+# ── Editor / OS ──────────────────────────────────────────────────────────
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
